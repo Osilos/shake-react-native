@@ -3,7 +3,6 @@ import App from './src/App';
 import { name as appName } from './app.json';
 import Shake from 'react-native-shake';
 
-import messaging from '@react-native-firebase/messaging';
 
 const startShake = async () => {
   Shake.setInvokeShakeOnScreenshot(true);
@@ -35,28 +34,6 @@ const startShake = async () => {
   Shake.registerUser('test_user');
 };
 
-const setupFirebaseNotifications = async () => {
-  if (Platform.OS === 'android') {
-    // Firebase push notifications background handler
-    messaging().setBackgroundMessageHandler(async (remoteMessage) => {
-      console.log('Message handled in the background!', remoteMessage);
-      await startShake();
-      Shake.showChatNotification(remoteMessage.data);
-    });
-    // Firebase push notifications foreground handler
-    messaging().onMessage(async (remoteMessage) => {
-      console.log('Message handled in the foreground!', remoteMessage);
-      Shake.showChatNotification(remoteMessage.data);
-    });
-
-    // Get FCM token for current session
-    const fcmToken = await messaging().getToken();
-    console.log(fcmToken);
-    Shake.setPushNotificationsToken(fcmToken);
-  }
-};
-
-setupFirebaseNotifications();
 startShake();
 
 AppRegistry.registerComponent(appName, () => App);

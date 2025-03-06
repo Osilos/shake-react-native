@@ -1,4 +1,10 @@
 {
   "name": "example",
-  "displayName": "example"
+  "displayName": "example",
+  "extra": {
+    "eas": {
+      "projectId": "18c6e9ec-94b7-4b1e-ac97-739adb6b6aec"
+    }
+  },
+  "owner": "soliso-hoora"
 }
